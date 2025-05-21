@@ -6,7 +6,6 @@ import userroutes from './routes/userroutes.js';
 import authroutes from './routes/auth.route.js';
 import cookieParser from 'cookie-parser';
 import listingRouter from './routes/listing.routes.js'; 
-import path from 'path';  
 
 dotenv.config();
 console.log('Environment variables loaded:', {
@@ -19,12 +18,6 @@ mongoose.connect(process.env.MONGODB || 'mongodb://localhost:27017/real_estate')
   }).catch((err) => {
     console.error('Error connecting to MongoDB:', err);
   });
-
- const __dirname = path.resolve();
- app.use(express.static(path.join(__dirname, 'frontend', 'dist')));
- app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname, 'frontend', 'dist', 'index.html'));
- });
 
 const app = express();
 
