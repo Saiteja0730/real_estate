@@ -1,8 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { Navigation } from 'swiper/modules';
-import SwiperCore from 'swiper';  
+import { Navigation} from 'swiper/modules';
 import 'swiper/css/bundle';
 import ListingItem from '../components/ListingItem';
 
@@ -14,9 +13,6 @@ const Home = () => {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    // Initialize Swiper modules
-    SwiperCore.use([Navigation]);
-
     const fetchListings = async () => {
       try {
         // Fetch offer listings
@@ -24,12 +20,13 @@ const Home = () => {
         if (!offerRes.ok) throw new Error('Failed to fetch offer listings');
         const offerData = await offerRes.json();
         setOfferListings(offerData.listings || []);
+
         // Fetch rent listings
         const rentRes = await fetch('http://localhost:3000/listing/get?type=rent&limit=4');
         if (!rentRes.ok) throw new Error('Failed to fetch rent listings');
         const rentData = await rentRes.json();
         setRentListings(rentData.listings || []);
-       
+
         // Fetch sale listings
         const saleRes = await fetch('http://localhost:3000/listing/get?type=sale&limit=4');
         if (!saleRes.ok) throw new Error('Failed to fetch sale listings');
@@ -84,20 +81,41 @@ const Home = () => {
       )}
 
       {/* Swiper */}
-     
-      <Swiper navigation>
-  {offerListings.length > 0 &&
-    offerListings.map((listing) => (
-      <SwiperSlide key={listing._id}>
-        <img
-          src={listing.imageUrls?.[0] || 'https://via.placeholder.com/1920x500'}
-          alt="Listing"
-          className="w-full h-[500px] object-cover"
-        />
-      </SwiperSlide>
-    ))}
-</Swiper>
-
+      {!loading && !error && offerListings.length > 0 && (
+        <div className='max-w-6xl mx-auto mb-12'>
+          <div className='my-3'>
+            <h2 className='text-2xl font-semibold text-slate-600'>Featured Properties</h2>
+          </div>
+          <Swiper
+            modules={[Navigation, Pagination]}
+            navigation={true}
+            pagination={{ clickable: true }}
+            spaceBetween={10}
+            slidesPerView={1}
+            className='swiper-container'
+          >
+            {offerListings.map((listing) => (
+              <SwiperSlide key={listing._id}>
+                <div className='relative h-[400px] sm:h-[500px]'>
+                  <img
+                    src={
+                      listing.imageUrls?.[0] ||
+                      'https://53.fs1.hubspotusercontent-na1.net/hub/53/hubfs/Sales_Blog/real-estate-business-compressor.jpg?width=595&height=400&name=real-estate-business-compressor.jpg'
+                    }
+                    alt={listing.name || 'Property listing'}
+                    className='w-full h-full object-cover'
+                  />
+                  <div className='absolute inset-0 bg-black/30'></div>
+                  <div className='absolute bottom-4 left-4 text-white'>
+                    <h3 className='text-xl font-semibold mb-2'>{listing.name}</h3>
+                    <p className='text-sm'>{listing.address}</p>
+                  </div>
+                </div>
+              </SwiperSlide>
+            ))}
+          </Swiper>
+        </div>
+      )}
 
       {/* Offer Listings */}
       {!loading && !error && offerListings.length > 0 && (
