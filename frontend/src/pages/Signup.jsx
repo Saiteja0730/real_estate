@@ -23,7 +23,7 @@ const Signup = () => {
     e.preventDefault();
     setLoading(true);
     setError(null);
-    const res = await fetch('https://real-estate-nhro.onrender.com/auth/signup',{
+    const res = await fetch('/auth/signup',{
       method: 'POST',
       headers:{
         'Content-Type': 'application/json',
