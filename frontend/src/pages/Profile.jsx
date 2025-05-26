@@ -79,7 +79,7 @@ const Profile = () => {
     try {
 
       dispatch(updateUserStart());
-      const res = await fetch(`http://localhost:3000/user/update/${currentUser._id}`, {
+      const res = await fetch(`https://real-estate-nhro.onrender.com/user/update/${currentUser._id}`, {
         method: 'POST',
         headers: {
           'Authorization': `Bearer ${currentUser.token}`,
@@ -105,7 +105,7 @@ const Profile = () => {
     try {
       dispatch(deleteUserStart());
       console.log('Current User Object:', currentUser);
-      const res = await fetch(`http://localhost:3000/user/delete/${currentUser._id}`, {
+      const res = await fetch(`https://real-estate-nhro.onrender.com/user/delete/${currentUser._id}`, {
         method: 'DELETE',
       });
 
@@ -125,7 +125,7 @@ const Profile = () => {
   const handleSignout = async() => {
     try {
       dispatch(signoutStart());
-      const res = await fetch('http://localhost:3000/auth/signout');
+      const res = await fetch('https://real-estate-nhro.onrender.com/auth/signout');
       const data = await res.json();
       console.error('Signout request failed:', res.status, data);
       if (data.success === false) {
@@ -142,29 +142,11 @@ const Profile = () => {
   const handleShowListings = async () => {
     try {
       setShowListingsError(false);
-      
-      // Get token from cookie
-      // const cookies = document.cookie.split(';');
-      // let token = '';
-      // for (let i = 0; i < cookies.length; i++) {
-      //   const cookie = cookies[i].trim();
-      //   if (cookie.startsWith('access_token=')) {
-      //     token = cookie.substring('access_token='.length);
-      //     break;
-      //   }
-      // }
-
-      // if (!token) {
-      //   console.error('No token found in cookies');
-      //   setShowListingsError(true);
-      //   return;
-      // }
-
 
       console.log('Current User:', currentUser);
       console.log('Token:', token);
       // Make the request with the token
-      const res = await fetch(`http://localhost:3000/user/listings/${currentUser._id}`, {
+      const res = await fetch(`https://real-estate-nhro.onrender.com/user/listings/${currentUser._id}`, {
         headers: {
           'Authorization': `Bearer ${token}`,
           'Content-Type': 'application/json',
@@ -189,7 +171,7 @@ const Profile = () => {
   
      const handleListingDelete = async (listingId) => {
   try {
-    const res = await fetch(`http://localhost:3000/listing/delete/${listingId}`, {
+    const res = await fetch(`https://real-estate-nhro.onrender.com/listing/delete/${listingId}`, {
       method: 'DELETE',
       credentials: 'include'
     });

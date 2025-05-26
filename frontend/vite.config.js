@@ -6,7 +6,7 @@ export default defineConfig({
   server: {
     proxy: {
       '/auth':{
-        target: 'http://localhost:3000',
+        target: 'https://real-estate-nhro.onrender.com',
         secure:false,
       },
     },

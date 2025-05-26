@@ -11,7 +11,7 @@ const OAuth = () => {
       const auth = getAuth(app);
       const result = await signInWithPopup(auth, provider);
 
-      const res = await fetch('http://localhost:3000/auth/google', {
+      const res = await fetch('https://real-estate-nhro.onrender.com/auth/google', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

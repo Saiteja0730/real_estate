@@ -56,9 +56,9 @@ const Search = () => {
       try {
         const searchQuery = urlParams.toString();
         console.log('Making API request with query:', searchQuery);
-        console.log('Full URL:', `http://localhost:3000/listing/get?${searchQuery}`);
+        console.log('Full URL:', `https://real-estate-nhro.onrender.com/listing/get?${searchQuery}`);
         
-        const res = await fetch(`http://localhost:3000/listing/get?${searchQuery}`);
+        const res = await fetch(`https://real-estate-nhro.onrender.com/listing/get?${searchQuery}`);
         console.log('API response status:', res.status);
         console.log('API response headers:', res.headers);
         
@@ -106,7 +106,7 @@ const Search = () => {
             simplerParams.set('type', sidebardata.type);
           }
           
-          const simplerRes = await fetch(`http://localhost:3000/listing/get?${simplerParams.toString()}`);
+          const simplerRes = await fetch(`https://real-estate-nhro.onrender.com/listing/get?${simplerParams.toString()}`);
           const simplerData = await simplerRes.json();
           
           if (simplerData.listings && simplerData.listings.length > 0) {
@@ -120,7 +120,7 @@ const Search = () => {
         // If still no results, check if we have any listings at all
         if (listingsArray.length === 0) {
           console.log('Checking if any listings exist...');
-          const checkRes = await fetch('http://localhost:3000/listing/get');
+          const checkRes = await fetch('https://real-estate-nhro.onrender.com/listing/get');
           const checkData = await checkRes.json();
           
           if (checkData.listings && checkData.listings.length === 0) {
@@ -201,7 +201,7 @@ const Search = () => {
       urlParams.set('startIndex', startIndex);
       const searchQuery = urlParams.toString();
       
-      const res = await fetch(`http://localhost:3000/listing/get?${searchQuery}`);
+      const res = await fetch(`https://real-estate-nhro.onrender.com/listing/get?${searchQuery}`);
       
       if (!res.ok) {
         throw new Error(`HTTP error! status: ${res.status}`);

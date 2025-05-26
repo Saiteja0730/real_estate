@@ -13,7 +13,7 @@ const Contact = ({listing}) => {
     useEffect(() => {
         const fetchLandlord = async () => {
             try {
-                const res = await fetch(`http://localhost:3000/user/${listing.userRef}`,{
+                const res = await fetch(`https://real-estate-nhro.onrender.com/user/${listing.userRef}`,{
                     headers: {
                         'Authorization': `Bearer ${token}`,
                         'Content-Type': 'application/json'

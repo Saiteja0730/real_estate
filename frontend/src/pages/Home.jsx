@@ -19,7 +19,7 @@ const Home = () => {
         setError(null);
 
         // Fetch rent listings
-        const rentRes = await fetch('https://bhavani-estate-sfsf.onrender.com/listing/get?type=rent&limit=4');
+        const rentRes = await fetch('https://real-estate-nhro.onrender.com/listing/get?type=rent&limit=4');
         if (!rentRes.ok) {
           const errorData = await rentRes.json();
           throw new Error(errorData.message || 'Failed to fetch rent listings');
@@ -29,7 +29,7 @@ const Home = () => {
         setOfferListings(rentData.listings || []);
 
         // Fetch sale listings
-        const saleRes = await fetch('https://bhavani-estate-sfsf.onrender.com/listing/get?type=sale&limit=4');
+        const saleRes = await fetch('https://real-estate-nhro.onrender.com/listing/get?type=sale&limit=4');
         if (!saleRes.ok) {
           const errorData = await saleRes.json();
           throw new Error(errorData.message || 'Failed to fetch sale listings');

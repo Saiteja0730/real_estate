@@ -50,7 +50,7 @@ const UpdateListing = () => {
   useEffect(() => {
     const fetchListing = async () => {
      const listingId = params.listingId;
-     const res = await fetch(`http://localhost:3000/listing/get/${listingId}`);
+     const res = await fetch(`https://real-estate-nhro.onrender.com/listing/get/${listingId}`);
      const data = await res.json();
      if (data.success === false) {
         console.log(data.message)
@@ -140,7 +140,7 @@ const UpdateListing = () => {
       if(+formData.regularPrice < +formData.discountPrice  ) return setError('Discount price should be less than regular price');
       setLoading(true);
       setError(false);
-      const res = await fetch(`http://localhost:3000/listing/update/${params.listingId}`, {
+      const res = await (`https://real-estate-nhro.onrender.com/listing/update/${params.listingId}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',

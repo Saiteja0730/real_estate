@@ -61,15 +61,23 @@ export const signin = async (req, res, next) => {
         }
         const token = jwt.sign({ id: user._id }, JWT_SECRET, { expiresIn: '1h' });
         const { password: hashedPassword, ...rest } = user._doc;
-        res.cookie('access_token', token, { httpOnly: true }).status(200).json(rest);
 
+        
+        res.cookie('access_token', token, {
+            httpOnly: true,
+            secure: false,      
+            sameSite: 'none',    
+        }).status(200).json({
+            success: true,
+            message: 'Signin successful',
+            ...rest
+        });
 
     } catch (error) {
         console.error('Signin error:', error);
         next(errorHandler(500, error.message || "Internal server error"));
-    };
+    }
 };
-
 
 export const google = async (req, res, next) => {
     try {
