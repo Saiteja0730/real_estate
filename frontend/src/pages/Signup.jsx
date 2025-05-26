@@ -23,7 +23,7 @@ const Signup = () => {
     e.preventDefault();
     setLoading(true);
     setError(null);
-    const res = await fetch('/auth/signup',{
+    const res = await fetch('https://real-estate-nhro.onrender.com/auth/signup',{
       method: 'POST',
       headers:{
         'Content-Type': 'application/json',
@@ -37,7 +37,14 @@ const Signup = () => {
       setError(data.message);
       return;
     }
-    // handle success (e.g., redirect or show success message)
+    if (data.success) {
+      setLoading(false);
+      setError(null);
+      navigate('/signin');
+    } else {
+      setLoading(false);
+      setError(data.message || 'Signup failed');
+    }
     setLoading(false);
     // console.log(data)
   }
