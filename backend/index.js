@@ -28,7 +28,7 @@ app.use((req, res, next) => {
 });
 
 app.use(cors({
-  origin: 'https://real-estate-1-fzhh.onrender.com',
+  origin: 'https://real-estate-phi-beige.vercel.app',
   credentials: true
 }));
 
