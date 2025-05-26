@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import {signInStart, signInSuccess, signInFailure} from '../redux/user/userSlice.js';
+import {signInStart, signInSuccess, signInFailure, setUser} from '../redux/user/userSlice.js';
 import OAuth from '../components/OAuth.jsx';
 
 
@@ -21,14 +21,15 @@ const Signin = () => {
   };
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
-    try {
-      dispatch(signInStart());
-      const res = await fetch('https://real-estate-nhro.onrender.com/auth/signin', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
+  e.preventDefault();
+  try {
+    dispatch(signInStart());
+    const res = await fetch('https://real-estate-nhro.onrender.com/auth/signin', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      credentials: 'include',
       body: JSON.stringify(formData),
     });
     const data = await res.json();
@@ -36,15 +37,23 @@ const Signin = () => {
       dispatch(signInFailure(data.message || 'Sign in failed'));
       return;
     }
-    dispatch(signInSuccess(data));
-    navigate('/');
-    } catch (error) {
-      dispatch(signInFailure(error.message || 'Network error'));
+    if (data.success) {
+      dispatch(setUser({
+        currentUser: data,
+        token: data.token, 
+        error: null,
+        loading: false
+      }));
+      dispatch(signInSuccess(data));
+      navigate('/');
     }
-  };
+  } catch (error) {
+    dispatch(signInFailure(error.message || 'Network error'));
+  }
+};
 
 
-  // console.log(formData)
+  console.log(formData)
 
   return (
     <div className='p-3 max-w-lg mx-auto'>
