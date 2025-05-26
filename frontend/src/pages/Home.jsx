@@ -15,23 +15,28 @@ const Home = () => {
   useEffect(() => {
     const fetchListings = async () => {
       try {
-        // Fetch offer listings
-        const offerRes = await fetch('http://localhost:3000/listing/get?offer=true&limit=4');
-        if (!offerRes.ok) throw new Error('Failed to fetch offer listings');
-        const offerData = await offerRes.json();
-        setOfferListings(offerData.listings || []);
+        setLoading(true);
+        setError(null);
 
         // Fetch rent listings
-        const rentRes = await fetch('http://localhost:3000/listing/get?type=rent&limit=4');
-        if (!rentRes.ok) throw new Error('Failed to fetch rent listings');
+        const rentRes = await fetch('https://bhavani-estate-sfsf.onrender.com/listing/get?type=rent&limit=4');
+        if (!rentRes.ok) {
+          const errorData = await rentRes.json();
+          throw new Error(errorData.message || 'Failed to fetch rent listings');
+        }
         const rentData = await rentRes.json();
         setRentListings(rentData.listings || []);
+        setOfferListings(rentData.listings || []);
 
         // Fetch sale listings
-        const saleRes = await fetch('http://localhost:3000/listing/get?type=sale&limit=4');
-        if (!saleRes.ok) throw new Error('Failed to fetch sale listings');
+        const saleRes = await fetch('https://bhavani-estate-sfsf.onrender.com/listing/get?type=sale&limit=4');
+        if (!saleRes.ok) {
+          const errorData = await saleRes.json();
+          throw new Error(errorData.message || 'Failed to fetch sale listings');
+        }
         const saleData = await saleRes.json();
         setSaleListings(saleData.listings || []);
+        
       } catch (error) {
         console.error('Error fetching listings:', error);
         setError('Failed to load listings. Please try again later.');
@@ -87,7 +92,7 @@ const Home = () => {
             <h2 className='text-2xl font-semibold text-slate-600'>Featured Properties</h2>
           </div>
           <Swiper
-            modules={[Navigation, Pagination]}
+            modules={[Navigation]}
             navigation={true}
             pagination={{ clickable: true }}
             spaceBetween={10}
