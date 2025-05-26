@@ -18,6 +18,14 @@ const Home = () => {
         setLoading(true);
         setError(null);
 
+        const offerRes = await fetch('https://real-estate-nhro.onrender.com/listing/get?type=offer&limit=4');
+        if (!offerRes.ok) {
+          const errorData = await offerRes.json();  
+          throw new Error(errorData.message || 'Failed to fetch offer listings');
+        }
+        const offerData = await offerRes.json();
+        setOfferListings(offerData.listings || []);
+
         // Fetch rent listings
         const rentRes = await fetch('https://real-estate-nhro.onrender.com/listing/get?type=rent&limit=4');
         if (!rentRes.ok) {
@@ -26,7 +34,6 @@ const Home = () => {
         }
         const rentData = await rentRes.json();
         setRentListings(rentData.listings || []);
-        setOfferListings(rentData.listings || []);
 
         // Fetch sale listings
         const saleRes = await fetch('https://real-estate-nhro.onrender.com/listing/get?type=sale&limit=4');
