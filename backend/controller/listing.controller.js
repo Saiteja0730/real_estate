@@ -13,6 +13,7 @@ export const createListing = async (req, res, next) => {
         console.error('Missing userRef in request body');
         return next(errorHandler(400, "User reference is required"));
       }
+      
   
       const listing = await Listing.create(req.body);
       console.log('Listing created:', listing);
