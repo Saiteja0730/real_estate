@@ -139,25 +139,8 @@ const Home = () => {
         </div>
       )}
 
-      {/* Rent Listings */}
-      {!loading && !error && rentListings.length > 0 && (
-        <div className='max-w-6xl mx-auto p-3'>
-          <div className='my-3'>
-            <h2 className='text-2xl font-semibold text-slate-600'>Recent places for rent</h2>
-            <Link className='text-sm text-blue-800 hover:underline' to={'/search?type=rent'}>
-              Show more places for rent
-            </Link>
-          </div>
-          <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6'>
-            {rentListings.map((listing) => (
-              <ListingItem listing={listing} key={listing._id} />
-            ))}
-          </div>
-        </div>
-      )}
-
       {/* Sale Listings */}
-      {!loading && !error && saleListings.length > 0 && (
+       {!loading && !error && saleListings.length > 0 && (
         <div className='max-w-6xl mx-auto p-3'>
           <div className='my-3'>
             <h2 className='text-2xl font-semibold text-slate-600'>Recent places for sale</h2>
@@ -167,6 +150,24 @@ const Home = () => {
           </div>
           <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6'>
             {saleListings.map((listing) => (
+              <ListingItem listing={listing} key={listing._id} />
+            ))}
+          </div>
+        </div>
+      )}
+      
+
+      {/* Rent Listings */}
+     {!loading && !error && rentListings.length > 0 && (
+        <div className='max-w-6xl mx-auto p-3'>
+          <div className='my-3'>
+            <h2 className='text-2xl font-semibold text-slate-600'>Recent places for rent</h2>
+            <Link className='text-sm text-blue-800 hover:underline' to={'/search?type=rent'}>
+              Show more places for rent
+            </Link>
+          </div>
+          <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6'>
+            {rentListings.map((listing) => (
               <ListingItem listing={listing} key={listing._id} />
             ))}
           </div>
